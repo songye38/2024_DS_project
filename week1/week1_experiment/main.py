@@ -15,10 +15,6 @@ load_dotenv()
 # API 키 가져오기
 api_key = os.getenv("NEPTUNE_API_KEY")
 
-# 가져온 API 키 사용
-#print(f"API Key: {api_key}")
-
-
 run = neptune.init_run(
     project="songye/IBM-customer-data",
     api_token=api_key,
