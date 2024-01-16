@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score
 
 X_train_,y_train_,X_test_,y_test_ = preprocess()
 
-def Svc(X_train,y_train,X_test,y_test):
+def svc_model(x_train,y_train,x_test,y_test):
     """svc 모델로 학습시키기"""
     svm_classifier = SVC()
 
@@ -24,18 +24,16 @@ def Svc(X_train,y_train,X_test,y_test):
     grid_search = GridSearchCV(svm_classifier, param_grid, cv=5, scoring='accuracy')
 
     # 데이터에 모델을 fitting
-    grid_search.fit(X_train, y_train)
+    grid_search.fit(x_train, y_train)
 
     # 최적의 하이퍼파라미터 출력
     print("최적의 하이퍼파라미터:", grid_search.best_params_)
 
     # 최적의 모델로 평가
     best_model = grid_search.best_estimator_
-    y_pred = best_model.predict(X_test)
+    y_pred = best_model.predict(x_test)
     accuracy = accuracy_score(y_test, y_pred)
     print("최적 모델의 정확도:", accuracy)
-
-
 def logistic_regression(x_train,y_train,x_test,y_test):
     """Logistic Regression으로 학습시키기"""
     logreg_classifier = LogisticRegression()
@@ -61,9 +59,6 @@ def logistic_regression(x_train,y_train,x_test,y_test):
     y_pred = best_model.predict(x_test)
     accuracy = accuracy_score(y_test, y_pred)
     print("최적 모델의 정확도:", accuracy)
-
-
-
 def Rf(X_train,y_train,X_test,y_test):
     """RandomForestClassifier 객체 생성"""
     rf_classifier = RandomForestClassifier()
@@ -146,7 +141,8 @@ def Dt(X_train,y_train,X_test,y_test):
 
 
 def main():
-    dt(X_train_,y_train_,X_test_,y_test_)
+    print("starting----------------------------------------")
+    Rf(X_train_,y_train_,X_test_,y_test_)
     
 
 if __name__ == "__main__":
