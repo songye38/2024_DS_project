@@ -7,7 +7,10 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
-def svc():
+X_train_,y_train_,X_test_,y_test_ = preprocess()
+
+def Svc(X_train,y_train,X_test,y_test):
+    """svc 모델로 학습시키기"""
     svm_classifier = SVC()
 
     # 튜닝할 하이퍼파라미터 설정
@@ -31,7 +34,10 @@ def svc():
     y_pred = best_model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
     print("최적 모델의 정확도:", accuracy)
-def lr():
+
+
+def logistic_regression(x_train,y_train,x_test,y_test):
+    """Logistic Regression으로 학습시키기"""
     logreg_classifier = LogisticRegression()
 
     # 튜닝할 하이퍼파라미터 설정
@@ -45,18 +51,21 @@ def lr():
     grid_search = GridSearchCV(logreg_classifier, param_grid, cv=5, scoring='accuracy')
 
     # 데이터에 모델을 fitting
-    grid_search.fit(X_train, y_train)
+    grid_search.fit(x_train, y_train)
 
     # 최적의 하이퍼파라미터 출력
     print("최적의 하이퍼파라미터:", grid_search.best_params_)
 
     # 최적의 모델로 평가
     best_model = grid_search.best_estimator_
-    y_pred = best_model.predict(X_test)
+    y_pred = best_model.predict(x_test)
     accuracy = accuracy_score(y_test, y_pred)
     print("최적 모델의 정확도:", accuracy)
-def rf():
-    # RandomForestClassifier 객체 생성
+
+
+
+def Rf(X_train,y_train,X_test,y_test):
+    """RandomForestClassifier 객체 생성"""
     rf_classifier = RandomForestClassifier()
 
     # 튜닝할 하이퍼파라미터 설정
@@ -83,8 +92,8 @@ def rf():
     y_pred = best_model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
     print("최적 모델의 정확도:", accuracy)
-def knn():
-    # KNN 객체 생성
+def Knn(X_train,y_train,X_test,y_test):
+    """KNN 객체 생성"""
     knn_classifier = KNeighborsClassifier()
 
     # 튜닝할 하이퍼 파라미터 설정
@@ -107,8 +116,8 @@ def knn():
     best_model = grid_search.best_estimator_
     accuracy = best_model.score(X_test, y_test)
     print("최적 모델의 정확도:", accuracy)
-def dt():
-    # DecisionTreeClassifier 객체 생성
+def Dt(X_train,y_train,X_test,y_test):
+    """DecisionTreeClassifier 객체 생성"""
     dt_classifier = DecisionTreeClassifier()
 
     # 튜닝할 하이퍼 파라미터 설정
@@ -137,7 +146,8 @@ def dt():
 
 
 def main():
-    preprocess()
+    dt(X_train_,y_train_,X_test_,y_test_)
+    
 
 if __name__ == "__main__":
     main()
