@@ -9,7 +9,6 @@
 
 import pandas as pd
 import numpy as np
-import seaborn as sns
 
 def preprocess():
     """Function printing python version."""
@@ -19,7 +18,7 @@ def preprocess():
 
     df = df.dropna()
 
-        # 바이너리 변수에 대한 인코딩
+    # 바이너리 변수에 대한 인코딩
     df["gender_encode"] = (df["gender"] == "Male").astype(int) #male -> 1 female -> 0
     df["Partner_encode"] = (df["Partner"] == "Yes").astype(int)
     df["Dependents_encode"] = (df["Dependents"] == "Yes").astype(int)
@@ -27,14 +26,17 @@ def preprocess():
     df["PaperlessBilling_encode"] = (df["PaperlessBilling"] == "Yes").astype(int)
 
 
+    #상관관계가 높은 범주형 변수들 변환해주기
     df = pd.get_dummies(df, columns=['Contract'], prefix=['Contract'])
-    df = pd.get_dummies(df, columns=['Contract'], prefix=['Contract'])
-    df = pd.get_dummies(df, columns=['Contract'], prefix=['Contract'])
-    df = pd.get_dummies(df, columns=['Contract'], prefix=['Contract'])
+    df = pd.get_dummies(df, columns=['OnlineSecurity'], prefix=['OnlineSecurity'])
+    df = pd.get_dummies(df, columns=['TechSupport'], prefix=['TechSupport'])
+    df = pd.get_dummies(df, columns=['InternetService'], prefix=['InternetService'])
 
-
-
-    df["Contract_Month-to-month_encode"] = (df["Contract_Month-to-month"] == "True").astype(int)
+    #위에서 바꾼 변수들을 다시 숫자형으로 바꿔주기
+    df["Contract_Month-to-month"] = (df["Contract_Month-to-month"] == "True").astype(int)
+    df["OnlineSecurity_No"] = (df["OnlineSecurity_No"] == "True").astype(int)
+    df["TechSupport_No"] = (df["TechSupport_No"] == "True").astype(int)
+    df["InternetService_Fiber optic"] = (df["InternetService_Fiber optic"] == "True").astype(int)
 
 
     feature_names = df.select_dtypes(include="number").columns #숫자형 데이터 타입만을 포함하는 컬럼들을 가지고 새로운 feature 생성
